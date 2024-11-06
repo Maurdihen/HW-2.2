@@ -1,24 +1,43 @@
-public class Hufflepuff extends Hogwarts {
+public class Hufflepuff extends Person {
+    private int hardworking;
+    private int loyalty;
+    private int honesty;
     private int score;
-    public Hufflepuff(String name, int nobility, int honor, int bravery, int hardWork, int loyalty, int honesty,
-                      int mind, int wisdom, int wit, int creative, int cunning, int determination, int ambition,
-                      int resourcefulness, int thirstPower, int magicalPower, int transgression) {
-        super(name, nobility, honor, bravery, hardWork, loyalty, honesty, mind, wisdom, wit, creative, cunning,
-                determination, ambition, resourcefulness, thirstPower, magicalPower, transgression);
-        score = getHardWork() + getLoyalty() + getHonesty();;
-    }
-    @Override
-    public String toString() {
-        return "Ученик Hufflepuff: " + super.toString();
+
+    public Hufflepuff(String name, int magicPower, int transgressionDistance, int hardworking, int loyalty, int honesty) {
+        super(name, magicPower, transgressionDistance);
+        this.hardworking = hardworking;
+        this.loyalty = loyalty;
+        this.honesty = honesty;
+        score = calculateHouseScore();
     }
 
-    public String whoIsBetter(Hufflepuff other) {
-        if (score > other.score) {
-            return this.getName() + " побеждает с счетом " + score;
-        } else if (score < other.score) {
-            return other.getName() + " побеждает с счетом " + other.score;
-        } else {
-            return "Ничья, счет " + score;
+    @Override
+    public int calculateHouseScore() {
+        return hardworking + loyalty + honesty;
+    }
+
+    @Override
+    public String toString() {
+        return "Ученик Hufflepuff: " + super.toString() +
+                ", hardworking=" + hardworking +
+                ", loyalty=" + loyalty +
+                ", honesty=" + honesty +
+                '}';
+    }
+
+    @Override
+    public String whoIsBetter(Person other) {
+        if (other instanceof Hufflepuff) {
+            Hufflepuff otherHufflepuff = (Hufflepuff) other;
+            if (score > otherHufflepuff.score) {
+                return this.getName() + " побеждает с счетом " + score;
+            } else if (score < otherHufflepuff.score) {
+                return other.getName() + " побеждает с счетом " + otherHufflepuff.score;
+            } else {
+                return "Ничья, счет " + score;
+            }
         }
+        return "Невозможно сравнить студентов разных факультетов";
     }
 }

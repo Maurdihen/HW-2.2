@@ -1,29 +1,47 @@
-public class Ravenclaw extends Hogwarts{
+public class Ravenclaw extends Person {
+    private int intelligence;
+    private int wisdom;
+    private int wit;
+    private int creativity;
     private int score;
-    public Ravenclaw(String name, int nobility, int honor, int bravery, int hardWork, int loyalty, int honesty,
-                      int mind, int wisdom, int wit, int creative, int cunning, int determination, int ambition,
-                      int resourcefulness, int thirstPower, int magicalPower, int transgression) {
-        super(name, nobility, honor, bravery, hardWork, loyalty, honesty, mind, wisdom, wit, creative, cunning,
-                determination, ambition, resourcefulness, thirstPower, magicalPower, transgression);
-        score = getMind() + getWisdom() + getWit() + getCreative();
 
+    public Ravenclaw(String name, int magicPower, int transgressionDistance, int intelligence, int wisdom, int wit,
+                     int creativity) {
+        super(name, magicPower, transgressionDistance);
+        this.intelligence = intelligence;
+        this.wisdom = wisdom;
+        this.wit = wit;
+        this.creativity = creativity;
+        score = calculateHouseScore();
     }
+
+    @Override
+    public int calculateHouseScore() {
+        return intelligence + wisdom + wit + creativity;
+    }
+
     @Override
     public String toString() {
-        return "Ученик Ravenclaw: " + super.toString();
+        return "Ученик Hufflepuff: " + super.toString() +
+                ", intelligence=" + intelligence +
+                ", wisdom=" + wisdom +
+                ", wit=" + wit +
+                ", creativity=" + creativity +
+                '}';
     }
 
-    public String whoIsBetter(Ravenclaw other) {
-        if (score > other.score) {
-            return getName() + " побеждает с счетом " + score;
-        } else if (score < other.score) {
-            return other.getName() + " побеждает с счетом " + other.score;
-        } else {
-            return "Ничья, счет " + score;
+    @Override
+    public String whoIsBetter(Person other) {
+        if (other instanceof Ravenclaw) {
+            Ravenclaw otherRavenclaw = (Ravenclaw) other;
+            if (score > otherRavenclaw.score) {
+                return this.getName() + " побеждает с счетом " + score;
+            } else if (score < otherRavenclaw.score) {
+                return other.getName() + " побеждает с счетом " + otherRavenclaw.score;
+            } else {
+                return "Ничья, счет " + score;
+            }
         }
-    }
-
-    public int getScoreByFaculty() {
-        return score;
+        return "Невозможно сравнить студентов разных факультетов";
     }
 }

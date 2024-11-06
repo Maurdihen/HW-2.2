@@ -1,24 +1,43 @@
-public class Gryffindor extends Hogwarts {
+public class Gryffindor extends Person {
+    private int nobility;
+    private int honor;
+    private int courage;
     private int score;
-    public Gryffindor(String name, int nobility, int honor, int bravery, int hardWork, int loyalty, int honesty,
-                      int mind, int wisdom, int wit, int creative, int cunning, int determination, int ambition,
-                      int resourcefulness, int thirstPower, int magicalPower, int transgression) {
-        super(name, nobility, honor, bravery, hardWork, loyalty, honesty, mind, wisdom, wit, creative, cunning,
-                determination, ambition, resourcefulness, thirstPower, magicalPower, transgression);
-        score = getNobility() + getHonor() + getBravery();;
-    }
-    @Override
-    public String toString() {
-        return "Ученик Gryffindor: " + super.toString();
+
+    public Gryffindor(String name, int magicPower, int transgressionDistance, int nobility, int honor, int courage) {
+        super(name, magicPower, transgressionDistance);
+        this.nobility = nobility;
+        this.honor = honor;
+        this.courage = courage;
+        score = calculateHouseScore();
     }
 
-    public String whoIsBetter(Gryffindor other) {
-        if (score > other.score) {
-            return this.getName() + " побеждает с счетом " + score;
-        } else if (score < other.score) {
-            return other.getName() + " побеждает с счетом " + other.score;
-        } else {
-            return "Ничья, счет " + score;
+    @Override
+    public int calculateHouseScore() {
+        return nobility + honor + courage;
+    }
+
+    @Override
+    public String toString() {
+        return "Ученик Gryffindor: " + super.toString() +
+                ", nobility=" + nobility +
+                ", honor=" + honor +
+                ", courage=" + courage +
+                '}';
+    }
+
+    @Override
+    public String whoIsBetter(Person other) {
+        if (other instanceof Gryffindor) {
+            Gryffindor otherGryffindor = (Gryffindor) other;
+            if (score > otherGryffindor.score) {
+                return this.getName() + " побеждает с счетом " + score;
+            } else if (score < otherGryffindor.score) {
+                return other.getName() + " побеждает с счетом " + otherGryffindor.score;
+            } else {
+                return "Ничья, счет " + score;
+            }
         }
+        return "Невозможно сравнить студентов разных факультетов";
     }
 }
